@@ -1,7 +1,11 @@
 # app_base_api
 
-Ejemplo práctico de una sencilla App básica pero con temas interesante.
-- [Referencia] (https://www.youtube.com/watch?v=J5GYpNCQjsI&t=322s)
+Ejemplo práctico de una sencilla App básica pero con temas interesantes.
+Vamós a ver :
+- await http.get
+- ListView.builder
+- PageView.builder
+- Pasar datos entre páginas
 
 ## Apuntes sobre la App:
 
