@@ -1,3 +1,4 @@
+import 'package:app_base_api/details_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
@@ -63,22 +64,22 @@ class _MyHomePageState extends State<MyHomePage> {
                   final _city = item['city'];
                   final _name = item['name'];
                   final _description = item['description'];
-                  final equipo = Equipo(
+                  final _equipo = Equipo(
                       name: _name,
                       city: _city,
                       image: _image,
                       description: _description);
                   // Mostrar datos
-                  return MyItems(equipo: equipo);
+                  return GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => DetailsPage(equipo: _equipo)));
+                      },
+                      child: MyItems(equipo: _equipo));
                 },
               )
             : CircularProgressIndicator(),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _incrementCounter,
-      //   tooltip: 'Increment',
-      //   child: Icon(Icons.add),
-      // ),
     );
   }
 }
@@ -93,7 +94,10 @@ class MyItems extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          Image.network(equipo.image),
+          Hero(
+            tag: equipo.name,
+            child: Image.network(equipo.image),
+          ),
           Text(
             equipo.name,
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),

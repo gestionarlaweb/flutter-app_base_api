@@ -6,10 +6,12 @@ Vamós a ver :
 - ListView.builder
 - PageView.builder
 - Pasar datos entre páginas
+- Omitir el AppBar y poder regresar a la página anterior colocando un boton
+- Widget HERO para crear una transición agradable
 
 ## Apuntes sobre la App:
 
-Código:
+### Código Apartado 1:
 ```
 import 'package:http/http.dart' as http;
 import 'dart:convert'; // Para jsonDecode
@@ -60,13 +62,13 @@ Importante: Decirle que mientras los datos sean null, muestre el Circular Progre
                   final _city = item['city'];
                   final _name = item['name'];
                   final _description = item['description'];
-                  final equipo = Equipo(
+                  final _equipo = Equipo(
                       name: _name,
                       city: _city,
                       image: _image,
                       description: _description);
                   // Mostrar datos
-                  return MyItems(equipo: equipo);
+                  return MyItems(equipo: _equipo);
                 },
               )
             : CircularProgressIndicator(),
@@ -81,4 +83,81 @@ class Equipo {
 ```
 ......
 ![Screenshot](/assets/images/video.gif)
+
+### Código Apartado 2:
+Vamos a ir a otra página mostrando la imagen seleccionada
+- Modificamos un poco el código
+```
+return MyItems(equipo: equipo);
+```
+por 
+```
+return GestureDetector(
+  onTap: () {
+     Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => DetailsPage(equipo: _equipo)));
+  },
+  child: MyItems(equipo: _equipo));
+```
+Ahora preparamos la página destino :
+```
+final Equipo equipo;
+
+return Scaffold(
+      appBar: AppBar(),
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.network(
+              equipo.image,
+              fit: BoxFit.cover,
+            ),
+          )
+        ],
+      ),
+    );
+```
+Como lo hacemos si queremos quitar el AppBar y poder tener un boton para retroceder de página:
+Con el 
+``` 
+BackButton(),
+```
+pero para ello es neceario que herede de (Material)
+```
+return Material(
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.network(
+              equipo.image,
+              fit: BoxFit.cover,
+            ),
+          ),
+          BackButton(),
+        ],
+      ),
+    );
+```
+### Widget HERO para una transición entre pantallas agradable:
+El tag será el identificador entre los dos HERO
+```
+// HERO del main.dart
+child: Column(
+        children: [
+          Hero(
+            tag: equipo.name,
+```    
+// HERO del details_page.dart        
+child: Stack(
+        children: [
+          Positioned.fill(
+            child: Hero(
+              tag: equipo.name,
+              child: Image.network(
+                equipo.image,
+                fit: BoxFit.cover,
+              ),
+```
+......
+![Screenshot](/assets/images/video2.gif)
 
