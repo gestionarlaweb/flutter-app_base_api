@@ -146,7 +146,7 @@ child: Column(
         children: [
           Hero(
             tag: equipo.name,
-```    
+  
 // HERO del details_page.dart        
 child: Stack(
         children: [
