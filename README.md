@@ -3,11 +3,13 @@
 Ejemplo práctico de una sencilla App básica pero con temas interesante.
 - [Referencia] (https://www.youtube.com/watch?v=J5GYpNCQjsI&t=322s)
 
-## Aspectos impotantes
+## Apuntes sobre la App:
 
 Código:
+```
 import 'package:http/http.dart' as http;
 import 'dart:convert'; // Para jsonDecode
+```
 ....
 ```
 List? _dataList;
@@ -41,7 +43,8 @@ Con un ListView
         }),
 ```
 .....
-Con un PageView. Importante decirle que mientras sean null los datos muestre el Circular Progress
+Con un PageView. 
+Importante: Decirle que mientras los datos sean null, muestre el Circular Progress....
 ```
     body: Center(
         child: _dataList != null 
